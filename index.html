@@ -1,44 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Totally Serious Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #000;
-    }
-    .video-container {
-      position: relative;
-      width: 80vw;
-      max-width: 800px;
-      padding-bottom: 45%;
-    }
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Dupuis | Portfolio</title>
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --bg-base: #f5f5f7;
+            --text-main: #111; 
+            --text-muted: #555;
+            --accent-blue: #0071e3;
+            --accent-orange: #ff9500;
+            --ruler-color: #c7c7cc;
+            
+            /* Glass */
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 12px 40px rgba(0,0,0,0.05);
+            --blur-strength: 30px;
+            
+            --container-width: 1200px;
+            --block-width: 360px; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Roboto, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* --- AMBIENT BACKGROUND --- */
+        .ambient-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 25%, #eff6ff 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, #fffbf0 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, #ffffff 0%, #f5f5f7 100%);
+        }
+
+        /* --- UTILS --- */
+        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 32px; }
+        
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+        }
+
+        .section-title {
+            font-size: 3rem; font-weight: 700; text-align: center; 
+            margin-bottom: 32px; 
+            letter-spacing: -0.03em; color: #1d1d1f;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.2s; }
+
+        /* --- 1. HERO --- */
+        .hero { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 40px 0; }
+        
+        .hero-card {
+            display: flex; flex-direction: row; align-items: center; gap: 80px; padding: 80px;
+            width: 100%; position: relative; overflow: visible; text-align: left; border-radius: 32px;
+        }
+
+        .hero-avatar {
+            width: 220px; height: 220px; border-radius: 50%; object-fit: cover;
+            border: 8px solid white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); flex-shrink: 0;
+        }
+
+        .hero-content { flex: 1; }
+
+        .hero h1 { 
+            font-size: 4.5rem; font-weight: 800; letter-spacing: -0.03em; 
+            margin-bottom: 24px; line-height: 1.1; color: #111;
+        }
+        .hero p { 
+            font-size: 1.35rem; color: #444; margin-bottom: 40px; 
+            font-weight: 400; max-width: 650px; 
+        }
+
+        .social-links { display: flex; gap: 16px; justify-content: flex-start; }
+        .social-btn {
+            width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: white; color: var(--text-main); border: 1px solid rgba(0,0,0,0.05);
+            transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .social-btn:hover { background: var(--text-main); color: white; transform: translateY(-4px); }
+
+        /* --- 2. PUBLICATIONS --- */
+        .publications { padding: 40px 0; }
+        .pub-list { display: flex; flex-direction: column; gap: 20px; }
+        .pub-card {
+            padding: 30px; display: flex; justify-content: space-between; align-items: flex-start;
+            transition: 0.3s; position: relative; overflow: hidden; color: var(--text-main);
+        }
+        .pub-card:hover { transform: scale(1.02); background: rgba(255,255,255,0.95); }
+        .pub-content { max-width: 800px; }
+        .pub-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.02em; }
+        .pub-authors { font-size: 0.9rem; color: var(--accent-blue); font-weight: 600; margin-bottom: 8px; }
+        .pub-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.5; }
+        .pub-arrow {
+            width: 40px; height: 40px; border-radius: 50%; background: #f0f0f2;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 24px;
+        }
+        .pub-card:hover .pub-arrow { background: var(--accent-blue); color: white; transform: translateX(5px); }
+
+        /* --- 3. PROJECTS --- */
+        .projects { padding: 40px 0; position: relative; }
+        .carousel-wrapper { position: relative; display: flex; align-items: center; }
+        .carousel-track {
+            display: flex; gap: 32px; overflow-x: auto; padding: 20px 4px 60px 4px;
+            scroll-behavior: smooth; scrollbar-width: none; width: 100%;
+            -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory;
+        }
+        .carousel-track::-webkit-scrollbar { display: none; }
+        .project-card {
+            min-width: 400px; max-width: 400px; padding: 24px;
+            display: flex; flex-direction: column; scroll-snap-align: center;
+            transition: 0.3s; position: relative; border-radius: 24px;
+        }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 24px 50px rgba(0,0,0,0.1); }
+        .project-media {
+            height: 220px; width: 100%; background: #e5e5e5; border-radius: 16px;
+            margin-bottom: 16px; object-fit: cover;
+        }
+        .project-content h3 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 700; }
+        .project-content p { font-size: 1rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
+        .project-actions { display: flex; gap: 12px; margin-top: auto; }
+        .btn-action {
+            padding: 8px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px; transition: 0.2s;
+        }
+        .btn-github { background: rgba(0,0,0,0.05); color: var(--text-main); }
+        .btn-github:hover { background: #1d1d1f; color: white; }
+        .btn-demo { background: rgba(0, 113, 227, 0.1); color: var(--accent-blue); }
+        .btn-demo:hover { background: var(--accent-blue); color: white; }
+        .carousel-btn {
+            position: absolute; top: 45%; transform: translateY(-50%); width: 56px; height: 56px;
+            border-radius: 50%; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+            border: 1px solid white; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; color: var(--text-main); box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        .carousel-btn:hover { background: white; transform: translateY(-50%) scale(1.1); }
+        .carousel-btn.prev { left: -28px; }
+        .carousel-btn.next { right: -28px; }
+
+        /* --- 4. TIMELINE (BALANCED & FRAMED) --- */
+        .timeline-section {
+            padding: 60px 0 140px 0; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Frame Styles */
+        .timeline-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: none;
+            padding: 0 50vw;
+            height: 580px; 
+            align-items: center;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            user-select: none;
+            
+            /* Subtle Frame */
+            border-top: 1px solid rgba(0,0,0,0.06);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.4) 50%, rgba(255,255,255,0));
+        }
+        .timeline-container:active { cursor: grabbing; }
+        .timeline-container::-webkit-scrollbar { display: none; }
+
+        .year-block {
+            flex: 0 0 var(--block-width);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s, transform 0.3s ease;
+        }
+
+        .ruler-axis {
+            width: 100%; height: 50px; display: flex; align-items: flex-end; justify-content: space-between;
+            border-bottom: 2px solid #e5e5ea; position: relative; padding: 0 12px;
+        }
+
+        .year-label {
+            position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%);
+            font-size: 1.6rem; font-weight: 800; color: var(--text-muted);
+            transition: 0.3s; z-index: 5; background: var(--bg-base); padding: 0 10px;
+        }
+
+        .tick { width: 1px; height: 10px; background: var(--ruler-color); transition: 0.3s; }
+        .tick:nth-child(3n) { height: 18px; width: 2px; background: #a1a1a6; }
+
+        .center-cursor {
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            width: 3px; height: 30px; background: var(--accent-blue);
+            border-radius: 2px; z-index: 20; pointer-events: none;
+            box-shadow: 0 0 15px rgba(0, 113, 227, 0.4); margin-top: -10px;
+        }
+
+        /* --- BALANCED SLOTS & CONNECTORS --- */
+        
+        .slot-top { 
+            position: absolute; bottom: 50%; 
+            padding-bottom: 60px; 
+            left: 0; width: 100%; display: flex; justify-content: center; 
+        }
+        .slot-bottom { 
+            position: absolute; top: 50%; 
+            padding-top: 70px; 
+            left: 0; width: 100%; display: flex; justify-content: center; 
+        }
+
+        .t-card {
+            width: 300px; padding: 24px; text-align: center; opacity: 0.4; transform: scale(0.9); filter: blur(1px);
+            transition: 0.4s ease; border-radius: 20px;
+        }
+        .t-logo {
+            width: 40px; height: 40px; background: white; border-radius: 12px; margin: 0 auto 8px auto;
+            display: flex; align-items: center; justify-content: center; color: var(--accent-blue);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .t-date {
+            display: block; font-size: 0.75rem; font-weight: 700; color: var(--accent-orange);
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+        }
+
+        /* CONNECTORS */
+        .t-card.exp::after {
+            content: ''; position: absolute; left: 50%; top: 100%; width: 1px; 
+            height: 60px; 
+            background: linear-gradient(to bottom, #d2d2d7, transparent);
+        }
+        .t-card.edu::after {
+            content: ''; position: absolute; left: 50%; bottom: 100%; width: 1px; 
+            height: 70px; 
+            background: linear-gradient(to top, #d2d2d7, transparent);
+        }
+
+        .year-block.active .year-label { color: var(--text-main); transform: translateX(-50%) scale(1.2); }
+        .year-block.active .tick { background: var(--text-main); height: 24px; }
+        .year-block.active .t-card {
+            opacity: 1; filter: blur(0); transform: scale(1); z-index: 10; border-color: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 900px) {
+            .hero-card { flex-direction: column-reverse; padding: 40px; gap: 40px; text-align: center; }
+            .social-links { justify-content: center; }
+            .hero h1 { font-size: 3rem; }
+            :root { --block-width: 85vw; }
+            .year-block { flex: 0 0 85vw; }
+        }
+    </style>
 </head>
 <body>
-  <div class="video-container">
-    <iframe
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-      title="YouTube video player"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen>
-    </iframe>
-  </div>
+
+    <div class="ambient-bg"></div>
+
+    <header class="hero container">
+        <div class="glass-panel hero-card">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=facearea&facepad=2.2&w=400&h=400&q=80" alt="Profile" class="hero-avatar">
+            <div class="hero-content">
+                <h1>Hi, I'm Gabriel Dupuis</h1>
+                <p>Engineering student at ENSTA Paris and VSR at Stanford University. Specialized in Computer Science and Machine Learning.</p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/gabriel-dupuis" class="social-btn"><i data-feather="linkedin"></i></a>
+                    <a href="https://github.com/puushtab" class="social-btn"><i data-feather="github"></i></a>
+                    <a href="mailto:gdupuis@stanford.edu" class="social-btn"><i data-feather="mail"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container publications">
+        <h2 class="section-title">Research</h2>
+        <div class="pub-list">
+            <a href="#" class="glass-panel pub-card">
+                <div class="pub-content">
+                    <div class="pub-title">Semi-Supervised Learning for Earthquake Phase Association</div>
+                    <div class="pub-authors">G. Dupuis, I. McBrearty, G. C. Beroza</div>
+                    <p class="pub-desc">A recursive framework for joint GNN training and synthetic data generation.</p>
+                </div>
+                <div class="pub-arrow"><i data-feather="arrow-right"></i></div>
+            </a>
+        </div>
+    </section>
+
+    <section class="container projects">
+        <h2 class="section-title">Works</h2>
+        <div class="carousel-wrapper">
+            <button class="carousel-btn prev" id="prevBtn"><i data-feather="chevron-left"></i></button>
+            <div class="carousel-track" id="track">
+                
+                <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80" class="project-media" alt="Startup">
+                    <div class="project-content">
+                        <h3>GlowUp</h3>
+                        <p>Y Combinator Hackathon. AI Agent for launching a start-up: automated market-research & pitch-deck.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=800&q=80" class="project-media" alt="Birds">
+                    <div class="project-content">
+                        <h3>WhistleSpotter</h3>
+                        <p>1st Place Centrale Supelec Hackathon. Bird audio detection using Perch model.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" class="project-media" alt="Quantum">
+                    <div class="project-content">
+                        <h3>FunkyJunction</h3>
+                        <p>Stanford MCP Hackathon. Superconducting Quantum Chip Builder.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1532509903400-68523949740f?w=800&q=80" class="project-media" alt="Grapes">
+                    <div class="project-content">
+                        <h3>Grape Expectation</h3>
+                        <p>Statistical learning pipeline to classify grape varieties using Lasso, SVM and XGBoost.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?w=800&q=80" class="project-media" alt="Glasses">
+                    <div class="project-content">
+                        <h3>Clairvoyance</h3>
+                        <p>Smart Glasses assistant for visually impaired individuals using YOLOv11 and LLMs.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" class="project-media" alt="Gym">
+                    <div class="project-content">
+                        <h3>KettleMind</h3>
+                        <p>2nd Place MIT Hackathon. AI Conversational Kettlebell coach.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80" class="project-media" alt="Code">
+                    <div class="project-content">
+                        <h3>DNN Framework</h3>
+                        <p>A Deep Neural Network Framework built entirely from scratch in C++.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="glass-panel project-card">
+                    <img src="https://images.unsplash.com/photo-1556228578-f3d413022172?w=800&q=80" class="project-media" alt="Medical">
+                    <div class="project-content">
+                        <h3>Skincaire</h3>
+                        <p>MIT Creativity Award. AI-powered skin outbreak tracker with quantized LLM.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="carousel-btn next" id="nextBtn"><i data-feather="chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <h2 class="section-title">Timeline</h2>
+        
+        <div class="center-cursor"></div>
+
+        <div class="timeline-container" id="timeline">
+            
+            <div class="year-block">
+                <div class="slot-top">
+                    <div class="glass-panel t-card exp" style="margin-left: 60px;">
+                        <span class="t-date">OCT 2025 - PRESENT</span>
+                        <div class="t-logo"><i data-feather="music"></i></div>
+                        <h4>ML Engineer Intern</h4>
+                        <p>Deezer</p>
+                    </div>
+                </div>
+                
+                <div class="ruler-axis">
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <span class="year-label">2025</span>
+                </div>
+
+                <div class="slot-bottom">
+                    <div class="glass-panel t-card edu" style="margin-left: -60px;">
+                        <span class="t-date">MAY 2025 - DEC 2025</span>
+                        <div class="t-logo"><i data-feather="cpu"></i></div>
+                        <h4>Visiting Researcher</h4>
+                        <p>Stanford University</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="year-block">
+                <div class="slot-top">
+                     <div class="glass-panel t-card exp">
+                        <span class="t-date">JAN 2024 - APR 2025</span>
+                        <div class="t-logo"><i data-feather="users"></i></div>
+                        <h4>President</h4>
+                        <p>DaTA Association</p>
+                    </div>
+                </div>
+                <div class="ruler-axis">
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <span class="year-label">2024</span>
+                </div>
+                <div class="slot-bottom"></div>
+            </div>
+
+            <div class="year-block">
+                <div class="slot-top"></div>
+                <div class="ruler-axis">
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <span class="year-label">2023</span>
+                </div>
+                <div class="slot-bottom">
+                    <div class="glass-panel t-card edu">
+                        <span class="t-date">2023 - 2027</span>
+                        <div class="t-logo"><i data-feather="book"></i></div>
+                        <h4>M.Sc. Computer Science</h4>
+                        <p>ENSTA Paris</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="year-block">
+                <div class="slot-top"></div>
+                <div class="ruler-axis">
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <span class="year-label">2022</span>
+                </div>
+                <div class="slot-bottom"></div>
+            </div>
+
+            <div class="year-block">
+                <div class="slot-top"></div>
+                <div class="ruler-axis">
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <span class="year-label">2021</span>
+                </div>
+                <div class="slot-bottom">
+                    <div class="glass-panel t-card edu">
+                        <span class="t-date">2021 - 2023</span>
+                        <div class="t-logo"><i data-feather="book"></i></div>
+                        <h4>B.Sc. Prep Classes</h4>
+                        <p>Lycée Le Parc</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        feather.replace();
+
+        const track = document.getElementById('track');
+        document.getElementById('prevBtn').addEventListener('click', () => track.scrollBy({ left: -430, behavior: 'smooth' }));
+        document.getElementById('nextBtn').addEventListener('click', () => track.scrollBy({ left: 430, behavior: 'smooth' }));
+
+        // Timeline Logic
+        const timeline = document.getElementById('timeline');
+        const blocks = document.querySelectorAll('.year-block');
+
+        // 1. Smart Wheel Scroll
+        timeline.addEventListener('wheel', (e) => {
+            const margin = window.innerWidth * 0.10;
+            
+            if (e.clientX < margin || e.clientX > window.innerWidth - margin) {
+                return; 
+            }
+
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                e.preventDefault();
+                timeline.scrollLeft += e.deltaY;
+            }
+        });
+
+        // 2. Drag Logic
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        timeline.addEventListener('mousedown', (e) => {
+            isDown = true;
+            timeline.style.cursor = 'grabbing';
+            startX = e.pageX - timeline.offsetLeft;
+            scrollLeft = timeline.scrollLeft;
+        });
+
+        timeline.addEventListener('mouseleave', () => { isDown = false; timeline.style.cursor = 'grab'; });
+        timeline.addEventListener('mouseup', () => { isDown = false; timeline.style.cursor = 'grab'; });
+
+        timeline.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - timeline.offsetLeft;
+            const walk = (x - startX) * 2;
+            timeline.scrollLeft = scrollLeft - walk;
+        });
+
+        // 3. Loop
+        function updateTimeline() {
+            const center = timeline.scrollLeft + (timeline.offsetWidth / 2);
+
+            blocks.forEach(block => {
+                const blockCenter = block.offsetLeft + (block.offsetWidth / 2);
+                const dist = Math.abs(center - blockCenter);
+                
+                if (dist < 180) {
+                    block.classList.add('active');
+                    const intensity = 1 - (dist / 180);
+                    block.style.transform = `scale(${1 + (intensity * 0.05)})`;
+                    block.style.opacity = 1;
+                } else {
+                    block.classList.remove('active');
+                    block.style.transform = `scale(0.95)`;
+                    block.style.opacity = 0.5;
+                }
+            });
+            requestAnimationFrame(updateTimeline);
+        }
+
+        updateTimeline();
+        timeline.addEventListener('scroll', () => requestAnimationFrame(updateTimeline));
+        setTimeout(() => { timeline.scrollLeft = 0; }, 100);
+    </script>
 </body>
 </html>
