@@ -132,8 +132,9 @@
         }
         .project-card:hover { transform: translateY(-10px); box-shadow: 0 24px 50px rgba(0,0,0,0.1); }
         .project-media {
-            height: 220px; width: 100%; background: #e5e5e5; border-radius: 16px;
-            margin-bottom: 16px; object-fit: cover;
+            height: 220px; width: 100%; border-radius: 16px;
+            margin-bottom: 16px; object-fit: contain;
+            background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(0,0,0,0.05));
         }
         .project-content h3 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 700; }
         .project-content p { font-size: 1rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
@@ -321,7 +322,9 @@
             <div class="carousel-track" id="track">
                 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80" class="project-media" alt="Startup">
+                    <video class="project-media" autoplay loop muted playsinline>
+                        <source src="media/glowup.mp4" type="video/mp4">
+                    </video>
                     <div class="project-content">
                         <h3>✨ GlowUp</h3>
                         <p>Multi-agent system that automates market research, pitch decks, and founder outreach for startup launch.</p>
@@ -332,7 +335,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=800&q=80" class="project-media" alt="Birds">
+                    <img src="media/whistlespotter.png" class="project-media" alt="Birds">
                     <div class="project-content">
                         <h3>🐦 WhistleSpotter</h3>
                         <p>Bird vocalization detector using deep audio embeddings with model aggregation for robust noise-resistant detection.</p>
@@ -343,7 +346,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" class="project-media" alt="Quantum">
+                    <img src="media/funkyjunction.jpeg" class="project-media" alt="Quantum">
                     <div class="project-content">
                         <h3>⚛️ FunkyJunction</h3>
                         <p>MCP-based tool for designing and assembling superconducting quantum chip architectures.</p>
@@ -354,7 +357,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1532509903400-68523949740f?w=800&q=80" class="project-media" alt="Grapes">
+                    <img src="media/grape.png" class="project-media" alt="Grapes">
                     <div class="project-content">
                         <h3>🍇 Grape Expectation</h3>
                         <p>Statistical learning pipeline comparing classical and modern models for grape variety classification.</p>
@@ -365,7 +368,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?w=800&q=80" class="project-media" alt="Glasses">
+                    <img src="media/clairvoyance.png" class="project-media" alt="Glasses">
                     <div class="project-content">
                         <h3>👓 Clairvoyance</h3>
                         <p>Smart-glasses assistant combining vision and speech to support visually impaired users at home.</p>
@@ -376,7 +379,9 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" class="project-media" alt="Gym">
+                    <video class="project-media vertical-video" autoplay loop muted playsinline>
+                        <source src="media/kettlebell.mp4" type="video/mp4">
+                    </video>
                     <div class="project-content">
                         <h3>🏋️ KettleMind</h3>
                         <p>Conversational AI coach providing personalized kettlebell training through real-time voice interaction.</p>
@@ -387,7 +392,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80" class="project-media" alt="Code">
+                    <img src="media/408262602-f7ddbe53-5fa2-45be-b641-650cbe111e0d.png" class="project-media" alt="Code">
                     <div class="project-content">
                         <h3>🧠 DNN Framework (C++)</h3>
                         <p>From-scratch C++ deep neural network framework implementing training and backpropagation.</p>
@@ -398,7 +403,7 @@
                 </div>
 
                  <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1556228578-f3d413022172?w=800&q=80" class="project-media" alt="Medical">
+                    <video src="media/skincaire.mp4" class="project-media" autoplay loop muted playsinline alt="Medical"></video>
                     <div class="project-content">
                         <h3>🧴 Skincaire</h3>
                         <p>AI system combining vision models and a quantized LLM to analyze skin conditions and recommend treatments.</p>
@@ -409,7 +414,9 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1580894894513-541e068a3e2b?w=800&q=80" class="project-media" alt="Koala">
+                    <video class="project-media" autoplay loop muted playsinline>
+                        <source src="media/koala.mp4" type="video/mp4">
+                    </video>
                     <div class="project-content">
                         <h3>🐨 Koala</h3>
                         <p>AI agent that automates second-hand product search and matching using an MCP server and resale platform APIs.</p>
@@ -420,7 +427,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" class="project-media" alt="Retina">
+                    <img src="media/retinavesselsegmentation.png" class="project-media" alt="Retina">
                     <div class="project-content">
                         <h3>👁️ Retina Vessel Segmentation</h3>
                         <p>Deep learning model for segmenting retinal blood vessels from fundus images.</p>
@@ -431,7 +438,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=800&q=80" class="project-media" alt="Text">
+                    <img src="media/confusiontextemotionclassifier.png" class="project-media" alt="Text">
                     <div class="project-content">
                         <h3>📘 Text Emotion Classifier</h3>
                         <p>Fine-tuned language model that classifies emotional content in text.</p>
@@ -442,18 +449,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80" class="project-media" alt="MNIST">
-                    <div class="project-content">
-                        <h3>🔢 MNIST Classifier</h3>
-                        <p>Handwritten digit classifier implementing core machine-learning workflows.</p>
-                        <div class="project-actions">
-                            <a href="#" class="btn-action btn-github"><i data-feather="github" width="16"></i> Code</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80" class="project-media" alt="RL">
+                    <img src="media/Coverage.png" class="project-media" alt="RL">
                     <div class="project-content">
                         <h3>🔵 RL – Maximum Coverage</h3>
                         <p>Reinforcement learning solution to optimize spatial resource coverage for irrigation planning.</p>
@@ -464,7 +460,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80" class="project-media" alt="Web">
+                    <img src="media/spo.png" class="project-media" alt="Web">
                     <div class="project-content">
                         <h3>🏫 SPO</h3>
                         <p>Web application for tracking student attendance built with TypeScript, Node.js, and MongoDB.</p>
@@ -475,7 +471,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80" class="project-media" alt="Drone">
+                    <img src="media/SLAM.png" class="project-media" alt="Drone">
                     <div class="project-content">
                         <h3>🧭 SLAM for Drones</h3>
                         <p>SLAM system enabling autonomous localization and mapping for drones.</p>
@@ -486,7 +482,9 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&q=80" class="project-media" alt="Crowd">
+                    <video class="project-media" autoplay loop muted playsinline>
+                        <source src="media/crowd.mp4" type="video/mp4">
+                    </video>
                     <div class="project-content">
                         <h3>🧍 Crowd Simulation</h3>
                         <p>Agent-based simulation modeling crowd dynamics and congestion risk.</p>
@@ -497,7 +495,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1591154669695-5f2a8d20c089?w=800&q=80" class="project-media" alt="Maze">
+                    <img src="media/maze.gif" class="project-media" alt="Maze">
                     <div class="project-content">
                         <h3>↪️ Maze Generator & Solver</h3>
                         <p>Procedural maze generation and pathfinding using classical graph algorithms.</p>
@@ -508,7 +506,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80" class="project-media" alt="Tron">
+                    <img src="media/tron.gif" class="project-media" alt="Tron">
                     <div class="project-content">
                         <h3>🚥 Tron Arcade Game</h3>
                         <p>Two-player Tron-style arcade game with real-time collision mechanics.</p>
