@@ -937,8 +937,16 @@
         const timeline = document.getElementById('timeline');
         const blocks = document.querySelectorAll('.year-block');
 
-        // 1. Smart Wheel Scroll
+        // 1. Smart Wheel Scroll with edge detection
         timeline.addEventListener('wheel', (e) => {
+            const margin = window.innerWidth * 0.25; // 25% from each side
+            
+            // If mouse is in the left 25% or right 25%, allow normal page scroll
+            if (e.clientX < margin || e.clientX > window.innerWidth - margin) {
+                return;
+            }
+            
+            // Otherwise, scroll timeline horizontally
             if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                 e.preventDefault();
                 timeline.scrollLeft += e.deltaY;
