@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gabriel Dupuis | Portfolio</title>
+    <link rel="icon" type="image/png" href="pfp.png">
     
     <script src="https://unpkg.com/feather-icons"></script>
 
@@ -48,6 +49,10 @@
 
         /* --- UTILS --- */
         .container { max-width: var(--container-width); margin: 0 auto; padding: 0 32px; }
+        
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+        }
         
         .glass-panel {
             background: var(--glass-bg);
@@ -263,18 +268,310 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.1);
         }
 
+        /* --- MACOS DOCK NAVIGATION --- */
+        .dock-nav {
+            position: fixed;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            pointer-events: auto;
+        }
+
+        .dock-item {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: relative;
+            color: var(--text-main);
+            font-size: 24px;
+        }
+
+        .dock-item:hover {
+            transform: scale(1.4) translateX(8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #ffffff, #f8f8f8);
+        }
+
+        .dock-item::after {
+            content: attr(data-label);
+            position: absolute;
+            left: 70px;
+            white-space: nowrap;
+            background: rgba(30, 30, 30, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+        }
+
+        .dock-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Magnification effect for adjacent items */
+        .dock-nav:hover .dock-item:not(:hover) {
+            transform: scale(0.9);
+        }
+
+        /* --- TABLET RESPONSIVE --- */
         @media (max-width: 900px) {
             .hero-card { flex-direction: column-reverse; padding: 40px; gap: 40px; text-align: center; }
             .social-links { justify-content: center; }
             .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.2rem; }
+            
+            .section-title { font-size: 2.5rem; }
+            
+            .project-card { min-width: 350px; max-width: 350px; }
+            .carousel-btn { width: 48px; height: 48px; }
+            .carousel-btn.prev { left: -24px; }
+            .carousel-btn.next { right: -24px; }
+            
             :root { --block-width: 85vw; }
             .year-block { flex: 0 0 85vw; }
+            
+            .dock-nav {
+                left: 50%;
+                top: auto;
+                bottom: 20px;
+                transform: translateX(-50%);
+                flex-direction: row;
+                padding: 12px;
+                z-index: 1001;
+            }
+            
+            .dock-item {
+                width: 44px;
+                height: 44px;
+            }
+            
+            .dock-item:hover {
+                transform: scale(1.3) translateY(-6px);
+            }
+            
+            .dock-item::after {
+                left: 50%;
+                top: -40px;
+                transform: translateX(-50%);
+            }
+        }
+        
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero { min-height: auto; padding: 60px 0 40px 0; }
+            
+            .hero-card {
+                padding: 32px 24px;
+                gap: 24px;
+                border-radius: 24px;
+            }
+            
+            .hero-avatar {
+                width: 150px;
+                height: 150px;
+                border: 6px solid white;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+                margin-bottom: 16px;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 24px;
+            }
+            
+            .social-btn {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 24px;
+            }
+            
+            /* Publications */
+            .publications { padding: 32px 0; }
+            
+            .pub-card {
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+            }
+            
+            .pub-title { font-size: 1.3rem; }
+            .pub-authors { font-size: 0.85rem; }
+            .pub-desc { font-size: 0.95rem; }
+            
+            .pub-arrow {
+                width: 36px;
+                height: 36px;
+                margin-left: 0;
+                align-self: flex-end;
+            }
+            
+            /* Projects */
+            .projects { padding: 32px 0; }
+            
+            .carousel-track {
+                gap: 20px;
+                padding: 16px 4px 40px 4px;
+            }
+            
+            .project-card {
+                min-width: 280px;
+                max-width: 280px;
+                padding: 20px;
+            }
+            
+            .project-media {
+                height: 180px;
+                margin-bottom: 12px;
+            }
+            
+            .project-content h3 {
+                font-size: 1.3rem;
+                margin-bottom: 8px;
+            }
+            
+            .project-content p {
+                font-size: 0.9rem;
+                margin-bottom: 16px;
+            }
+            
+            .btn-action {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                display: none;
+            }
+            
+            /* Timeline */
+            .timeline-section { padding: 40px 0 100px 0; }
+            
+            .timeline-container { height: 500px; }
+            
+            .t-card {
+                width: 260px;
+                padding: 20px;
+            }
+            
+            .t-logo {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .t-date {
+                font-size: 0.7rem;
+                margin-bottom: 10px;
+            }
+            
+            .t-card h4 {
+                font-size: 1rem;
+            }
+            
+            .t-card p {
+                font-size: 0.9rem;
+            }
+            
+            .year-label {
+                font-size: 1.4rem;
+                bottom: -40px;
+            }
+            
+            .center-cursor {
+                height: 25px;
+                width: 2px;
+            }
+            
+            /* Dock */
+            .dock-nav {
+                bottom: 16px;
+                padding: 10px;
+                gap: 12px;
+            }
+            
+            .dock-item {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .dock-item:hover {
+                transform: scale(1.2) translateY(-4px);
+            }
+        }
+        
+        /* --- SMALL MOBILE --- */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            
+            .hero-card { padding: 24px 16px; }
+            .hero-avatar { width: 120px; height: 120px; }
+            
+            .section-title { font-size: 1.75rem; }
+            
+            .project-card {
+                min-width: 260px;
+                max-width: 260px;
+            }
+            
+            .pub-title { font-size: 1.2rem; }
+            
+            .t-card { width: 240px; padding: 16px; }
+            
+            .dock-nav { gap: 8px; padding: 8px; }
+            .dock-item { width: 36px; height: 36px; font-size: 18px; }
         }
     </style>
 </head>
 <body>
 
     <div class="ambient-bg"></div>
+
+    <!-- macOS Dock Navigation -->
+    <nav class="dock-nav">
+        <div class="dock-item" data-label="Research" onclick="scrollToSection('research')">
+            📚
+        </div>
+        <div class="dock-item" data-label="Projects" onclick="scrollToSection('projects')">
+            💻
+        </div>
+        <div class="dock-item" data-label="Timeline" onclick="scrollToSection('timeline-section')">
+            📅
+        </div>
+    </nav>
 
     <header class="hero container">
         <div class="glass-panel hero-card">
@@ -291,7 +588,7 @@
         </div>
     </header>
 
-    <section class="container publications">
+    <section class="container publications" id="research">
         <h2 class="section-title">Research</h2>
         <div class="pub-list">
             <a href="papers/sslgenie.pdf" class="glass-panel pub-card">
@@ -302,8 +599,6 @@
                 </div>
                 <div class="pub-arrow"><i data-feather="arrow-right"></i></div>
             </a>
-        </div>
-            <div class="pub-list">
             <a href="papers/clairvoyance.pdf" class="glass-panel pub-card">
                 <div class="pub-content">
                     <div class="pub-title">Clairvoyance: Smart Multimodal Assistant for Visually Impaired People</div>
@@ -315,7 +610,7 @@
         </div>
     </section>
 
-    <section class="container projects">
+    <section class="container projects" id="projects">
         <h2 class="section-title">Works</h2>
         <div class="carousel-wrapper">
             <button class="carousel-btn prev" id="prevBtn"><i data-feather="chevron-left"></i></button>
@@ -368,7 +663,7 @@
                 </div>
 
                 <div class="glass-panel project-card">
-                    <img src="media/clairvoyance.png" class="project-media" alt="Glasses">
+                    <video src="media/clairvoyance.mp4" class="project-media" autoplay loop muted playsinline alt="Glasses"></video>
                     <div class="project-content">
                         <h3>👓 Clairvoyance</h3>
                         <p>Smart-glasses assistant combining vision and speech to support visually impaired users at home.</p>
@@ -521,7 +816,7 @@
         </div>
     </section>
 
-    <section class="timeline-section">
+    <section class="timeline-section" id="timeline-section">
         <h2 class="section-title">Timeline</h2>
         
         <div class="center-cursor"></div>
@@ -539,7 +834,7 @@
                 <div class="slot-bottom">
                     <div class="glass-panel t-card edu">
                         <span class="t-date">2021 - 2023</span>
-                        <div class="t-logo"><i data-feather="book"></i></div>
+                        <div class="t-logo"><img src="media/parc.png" alt="Lycée Le Parc" style="width: 100%; height: 100%; object-fit: contain;"></div>
                         <h4>B.Sc. Prep Classes</h4>
                         <p>Lycée Le Parc</p>
                     </div>
@@ -568,8 +863,8 @@
                 <div class="slot-bottom">
                     <div class="glass-panel t-card edu">
                         <span class="t-date">2023 - 2027</span>
-                        <div class="t-logo"><i data-feather="book"></i></div>
-                        <h4>M.Sc. Computer Science</h4>
+                        <div class="t-logo"><img src="media/ensta.png" alt="ENSTA Paris" style="width: 100%; height: 100%; object-fit: contain;"></div>
+                        <h4>B.Sc & M.Sc. Computer Science</h4>
                         <p>ENSTA Paris</p>
                     </div>
                 </div>
@@ -579,7 +874,7 @@
                 <div class="slot-top">
                      <div class="glass-panel t-card exp">
                         <span class="t-date">JAN 2024 - APR 2025</span>
-                        <div class="t-logo"><i data-feather="users"></i></div>
+                        <div class="t-logo"><img src="media/data_ensta.png" alt="DaTA Association" style="width: 100%; height: 100%; object-fit: contain;"></div>
                         <h4>President</h4>
                         <p>DaTA Association</p>
                     </div>
@@ -597,7 +892,7 @@
                 <div class="slot-top">
                     <div class="glass-panel t-card exp" style="margin-left: 60px;">
                         <span class="t-date">OCT 2025 - PRESENT</span>
-                        <div class="t-logo"><i data-feather="music"></i></div>
+                        <div class="t-logo"><img src="media/deezer.png" alt="Deezer" style="width: 100%; height: 100%; object-fit: contain;"></div>
                         <h4>ML Engineer Intern</h4>
                         <p>Deezer</p>
                     </div>
@@ -613,7 +908,7 @@
                 <div class="slot-bottom">
                     <div class="glass-panel t-card edu" style="margin-left: -60px;">
                         <span class="t-date">MAY 2025 - DEC 2025</span>
-                        <div class="t-logo"><i data-feather="cpu"></i></div>
+                        <div class="t-logo"><img src="media/stanford2.png" alt="Stanford University" style="width: 100%; height: 100%; object-fit: contain;"></div>
                         <h4>Visiting Researcher</h4>
                         <p>Stanford University</p>
                     </div>
@@ -626,6 +921,14 @@
     <script>
         feather.replace();
 
+        // Dock Navigation
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
         const track = document.getElementById('track');
         document.getElementById('prevBtn').addEventListener('click', () => track.scrollBy({ left: -430, behavior: 'smooth' }));
         document.getElementById('nextBtn').addEventListener('click', () => track.scrollBy({ left: 430, behavior: 'smooth' }));
@@ -636,17 +939,11 @@
 
         // 1. Smart Wheel Scroll
         timeline.addEventListener('wheel', (e) => {
-            const margin = window.innerWidth * 0.10;
-            
-            if (e.clientX < margin || e.clientX > window.innerWidth - margin) {
-                return; 
-            }
-
             if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
                 e.preventDefault();
                 timeline.scrollLeft += e.deltaY;
             }
-        });
+        }, { passive: false });
 
         // 2. Drag Logic
         let isDown = false;
